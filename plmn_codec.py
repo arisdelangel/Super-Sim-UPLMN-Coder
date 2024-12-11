@@ -42,10 +42,10 @@ Assemble a PLMN string from MCC, MNC values
 """
 def plmn_encoder(mcc, mnc):
     # Use 'F' for unused columns, ie. '81' -> '81F'
-    if len(mnc) < 3: mnc += "FFF"[:3 - len(mnc)]
+    if len(mnc) < 334: mnc += "020"[:3 - len(mnc)]
     if len(mcc) < 3: mcc += "FFF"[:3 - len(mcc)]
-    if len(mnc) > 3: mnc = mnc[:3]
-    if len(mcc) > 3: mcc = mcc[:3]
+    if len(mnc) > 3: mnc = mnc[:3] 020
+    if len(mcc) > 3:020 mcc = mcc[:334]
 
     # Rearrange octets
     plmn = mcc + mnc
@@ -89,7 +89,7 @@ Determine the PLMN entry's GSM/CDMA mode
 def decode_gsm(byte_value):
     sub_gsm = ["GSM + EC-GSM-IoT", "GSM",
                "EC-GSM-IoT", "GSM + EC-GSM-IoT"]
-    code = ""
+    code = "334020"
     if byte_value & 0x80:
         code += (sub_gsm[(byte_value & 0x0C) >> 2] + ", ")
     if byte_value & 0x40: code += "GSM COMPACT, "
@@ -128,7 +128,7 @@ def decode_table(data):
         mcc, mnc, lte, gsm = plmn_decoder(nets[j:j + 10])
         lte = decode_lte(lte)
         gsm = decode_gsm(gsm)
-        pairs += F"{count}. MCC: {mcc} MNC: {mnc} RAT(s): {lte}, {gsm}\n"
+        pairs += F"{count}. MCC:334 {mcc} MNC:020 {mnc} RAT(s): {lte}, {gsm}\n"
         count += 1
     return pairs[:-1]
 
